@@ -1,10 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="first.css">
-  <title>Welcome</title>
+  <title>HAkika Credit Loans - Your Trusted Financial Partner.</title>
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <!-- iOS Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Hakika Credit Loans">
+  <!-- Favicon and Icons -->
+  <link rel="icon" type="image/png" href="/images/icons/icon-72x72.png">
+  <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png">
+  <!-- Theme Color for Mobile Browsers -->
+  <meta name="theme-color" content="#3f4bef">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -48,17 +59,20 @@
     button:hover {
       background-color: darkblue;
     }
-    /* Process GIF overlay styling */
-    #gifcontent {
-      position: calc();
+    .loading-overlay {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 10%;
-      height: 10%;
-      object-fit: cover;
-      display: none;
-      z-index: 1000;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
       align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5em;
+      font-weight: bold;
+      display: none;
     }
   </style>
 </head>
@@ -75,18 +89,69 @@
     <button id="startButton">Get Started</button>
   </div>
   
-  <!-- Process GIF as an overlay -->
-  <img src="pro.gif" alt="Authorization GIF" id="gifcontent">
+  <footer class="footer">
+    <p>&copy; 2025 Terms and conditions apply.</p>
+  </footer>
   
+  <!-- Service Worker and PWA scripts remain unchanged -->
   <script>
-    document.getElementById("startButton").addEventListener("click", function() {
-      // Show the GIF overlay
-      document.getElementById("gifcontent").style.display = "block";
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('Service Worker registered successfully:', registration.scope);
+          })
+          .catch(error => {
+            console.log('Service Worker registration failed:', error);
+          });
+      });
+    }
+    
+    // PWA Install Popup Logic (if applicable)
+    let deferredPrompt;
+    let pwaInstallPopup = document.getElementById('pwa-install-popup');
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
       setTimeout(() => {
-        window.location.href = "steps.html";
-      }, 3000);
+        if (pwaInstallPopup) {
+          pwaInstallPopup.style.display = 'flex';
+        }
+      }, 1000);
+    });
+    
+    function installPWA() {
+      if (pwaInstallPopup) {
+        pwaInstallPopup.style.display = 'none';
+      }
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the PWA install');
+            localStorage.setItem('pwaInstallPromptDismissed', 'true');
+          } else {
+            console.log('User dismissed the PWA install');
+          }
+          deferredPrompt = null;
+        });
+      }
+    }
+    
+    function dismissPWAPopup() {
+      if (pwaInstallPopup) {
+        pwaInstallPopup.style.display = 'none';
+      }
+      localStorage.setItem('pwaInstallPromptDismissed', 'true');
+    }
+    
+    // Redirect to register.html when "Get Started" button is clicked
+    document.getElementById("startButton").addEventListener("click", function() {
+      window.location.href = "steps.html";
     });
   </script>
+  
+  <!-- Additional script for other functionality can go here -->
 </body>
 </html>
-
