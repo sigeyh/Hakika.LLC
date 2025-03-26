@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Referral Application</title>
+  <link href="main.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f9f9f9;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    h2 {
+      border-bottom: 2px solid #007BFF;
+      padding-bottom: 0.5rem;
+      color: #007BFF;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input,
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+    .submit-btn {
+      display: block;
+      text-align: center;
+      padding: 0.7rem 1rem;
+      margin-top: 1.5rem;
+      width: 100%;
+      background-color: #007BFF;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Overlay styling */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .loading-gif {
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Referral Application</h1>
+  </header>
+
+  <main>
+    <form id="referralForm">
+      <section>
+        <h2>Financial & Educational Information</h2>
+        <label for="education">Level of Education:</label>
+        <select id="education" name="education" required>
+          <option value="">-- Select Education Level --</option>
+          <option value="primary">Primary</option>
+          <option value="secondary">Secondary</option>
+          <option value="diploma">Diploma</option>
+          <option value="bachelor">Bachelor's Degree</option>
+          <option value="master">Master's Degree</option>
+          <option value="phd">PhD</option>
+        </select>
+
+        <label for="employment">Employment Status:</label>
+        <select id="employment" name="employment" required>
+          <option value="">-- Select Employment Status --</option>
+          <option value="employed">Employed</option>
+          <option value="self-employed">Self-employed</option>
+          <option value="unemployed">Unemployed</option>
+          <option value="student">Student</option>
+          <option value="retired">Retired</option>
+        </select>
+
+        <label for="monthlyIncome">Monthly Income:</label>
+        <input type="number" id="monthlyIncome" name="monthlyIncome" required>
+
+        <label for="loanPurpose">Loan Purpose:</label>
+        <select id="loanPurpose" name="loanPurpose" required>
+            <option value="">--Select type of Loan--</option>
+            <option value="personal Loan">Personal Loan</option>
+            <option value="Business Loan">Business Loan</option>
+            <option value="Medical Loan">Medical Loan</option>
+            <option value="Emergency Loan">Emergency Loan</option>
+            <option value="Car financing Loan">Car financing Loan</option>
+        </select>
+      </section>
+
+      <section>
+        <h2>Referral Contact Details</h2>
+        <label for="referralName">Referral Name:</label>
+        <input type="text" id="referralName" name="referralName" required>
+
+        <label for="referralPhone">Referral Phone:</label>
+        <input type="tel" id="referralPhone" name="referralPhone" required>
+
+        <label for="relationship">Relationship:</label>
+        <input type="text" id="relationship" name="relationship" required>
+      </section>
+
+      <button type="button" class="submit-btn" id="submitButton">Submit Referral</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 HAKIKA</p>
+  </footer>
+
+  <!-- Overlay with GIF -->
+  <div class="overlay" id="overlay">
+    <img src="pro.gif" alt="Loading..." class="loading-gif">
+  </div>
+
+  <script>
+    document.getElementById("submitButton").addEventListener("click", function() {
+      // Show the overlay with the GIF
+      const overlay = document.getElementById("overlay");
+      overlay.classList.add("show");
+
+      // Wait 2 seconds before redirecting
+      setTimeout(function() {
+        window.location.href = "checklimit.html";
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

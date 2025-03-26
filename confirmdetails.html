@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Confirm Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      background-color: #fff;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .detail {
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+    .detail strong {
+      display: inline-block;
+      width: 150px;
+    }
+    .button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      text-align: center;
+    }
+    .button:hover {
+      background-color: darkgreen;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Confirm Your Details</h1>
+    <div class="detail"><strong>Last Name:</strong> <span id="lastname">Loading...</span></div>
+    <div class="detail"><strong>First Name:</strong> <span id="firstname">Loading...</span></div>
+    <div class="detail"><strong>Phone Number:</strong> <span id="phone">Loading...</span></div>
+    <div class="detail"><strong>ID Number:</strong> <span id="idnumber">Loading...</span></div>
+    <div class="detail"><strong>Email Address:</strong> <span id="email">Loading...</span></div>
+    <div class="detail"><strong>Location:</strong> <span id="location">Loading...</span></div>
+    <div class="detail"><strong>Date of Birth:</strong> <span id="dob">Loading...</span></div>
+    <button class="button" onclick="confirmDetails()">Confirm</button>
+  </div>
+  <script>
+    // Retrieve details from localStorage (ensure that your signup page saves these details)
+    document.getElementById('lastname').textContent = localStorage.getItem('lastname') || 'Not provided';
+    document.getElementById('firstname').textContent = localStorage.getItem('firstname') || 'Not provided';
+    document.getElementById('phone').textContent = localStorage.getItem('phone') || 'Not provided';
+    document.getElementById('idnumber').textContent = localStorage.getItem('idnumber') || 'Not provided';
+    document.getElementById('email').textContent = localStorage.getItem('email') || 'Not provided';
+    document.getElementById('location').textContent = localStorage.getItem('location') || 'Not provided';
+    document.getElementById('dob').textContent = localStorage.getItem('dob') || 'Not provided';
+    
+    // Redirect to otherdetails.html when the Confirm button is clicked
+    function confirmDetails() {
+      window.location.href = 'otherdetails.html';
+    }
+  </script>
+</body>
+</html>

