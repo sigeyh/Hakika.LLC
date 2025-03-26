@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="first.css">
+  <title>Welcome</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    .container {
+      width: 50%;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+    }
+    .form-section {
+      margin: 20px 0;
+    }
+    .form-section h2 {
+      margin-bottom: 10px;
+    }
+    .form-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    .form-list li {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+    button {
+      background-color: blue;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: darkblue;
+    }
+    /* Process GIF overlay styling */
+    #gifcontent {
+      position: calc();
+      top: 0;
+      left: 0;
+      width: 10%;
+      height: 10%;
+      object-fit: cover;
+      display: none;
+      z-index: 1000;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>WELCOME TO INUKA FUNDS</h1>
+    <form>
+      <ul class="form-list">
+        <li class="form-section">1. Create Account</li>
+        <li class="form-section">2. Login</li>
+        <li class="form-section">3. Proceed to Admin</li>
+      </ul>
+    </form>
+    <button id="startButton">Get Started</button>
+  </div>
+  
+  <!-- Process GIF as an overlay -->
+  <img src="pro.gif" alt="Authorization GIF" id="gifcontent">
+  
+  <script>
+    document.getElementById("startButton").addEventListener("click", function() {
+      // Show the GIF overlay
+      document.getElementById("gifcontent").style.display = "block";
+      setTimeout(() => {
+        window.location.href = "steps.html";
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
+
